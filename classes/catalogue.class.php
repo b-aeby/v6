@@ -1354,10 +1354,17 @@ class Catalogue
                         $product_data['tax_inclusive'] = $pricing_group[0]['tax_inclusive']; # do not rely on retail price setting!
                         $product_data['tax_type'] = $pricing_group[0]['tax_type'];
                     }
-                    // Give the customer the lowest price
+                    // Give the customer the lowest price but sale price can't be 0.00 if there is one of value
+                    $sale_price = '0.00';
                     foreach($prices as $type => $price) {
-                        $product_data['price'] = $price['price']<$product_data['price'] ? $price['price'] : $product_data['price'];
-                        $product_data['sale_price'] = $price['sale_price']<$product_data['sale_price'] ? $price['sale_price'] : $product_data['sale_price'];
+                        $product_data['price'] = $price['price'] < $product_data['price'] ? $price['price'] : $product_data['price'];
+                        if($sale_price == '0.00' && $price['sale_price'] > 0) {
+                            $sale_price = $price['sale_price'];
+                        }
+                        if($sale_price > 0 && $price['sale_price'] < $sale_price) {
+                            $sale_price = $price['sale_price'];
+                        }
+                        $product_data['sale_price'] = $sale_price;
                     }
                     unset($prices, $price);
                 }
