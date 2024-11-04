@@ -252,6 +252,12 @@ function fmSearch(mode, term, token) {
     });
  }
 $(document).ready(function() {
+
+    $('.strlen').on("keyup", function() {
+		var rel = $(this).attr('rel');
+        var length = $(this).val().length;
+		$('#'+rel).text(length);
+	});
     
     $(".editable_phrase").on("focusout", function() {
         var phrase_id = $(this).attr('rel');
