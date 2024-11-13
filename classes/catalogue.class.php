@@ -201,6 +201,7 @@ class Catalogue
     public function defineOptionsIdentifier($optionsArray)
     {
         if (is_array($optionsArray)) {
+            $assign_ids = array();
             foreach ($optionsArray as $value) {
                 if (is_numeric($value)) {
                     $assign_ids[] = (int)$value;
@@ -213,7 +214,7 @@ class Catalogue
                 }
             }
 
-            if (is_array($assign_ids)) {
+            if (!empty($assign_ids)) {
                 $query = 'SELECT `option_id`, `value_id` FROM `'.$GLOBALS['config']->get('config', 'dbprefix').'CubeCart_option_assign` WHERE `matrix_include` = 1 AND `assign_id` IN ('.implode(',', $assign_ids).') ORDER BY `option_id`, `value_id` ASC';
 
                 $option_identifiers = $GLOBALS['db']->query($query);
