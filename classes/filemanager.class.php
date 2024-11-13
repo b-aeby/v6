@@ -136,7 +136,7 @@ class FileManager
                         // Use Hi-res image
                         $source = $this->_manage_root.'/'.$this->_sub_dir.$current_filename;
                         $size = getimagesize($source);
-                        $gd  = new GD(dirname($source), false, 100);
+                        $gd  = new GD(dirname($source), false, 80);
                         $gd->gdLoadFile($source);
                         # TO DO: ROTATION
                         $gd->gdCrop((int)$resize['x'], (int)$resize['y'], (int)$resize['w'], (int)$resize['h']);
@@ -1256,7 +1256,7 @@ class FileManager
                     continue;
                 }
 
-                $gd = new GD($this->_manage_root.'/'.$this->_sub_dir);
+                $gd = new GD($this->_manage_root.'/'.$this->_sub_dir, false, 80);
                 if (!empty($file['tmp_name']) && is_uploaded_file($file['tmp_name'])) {
                     if ($this->_mode == self::FM_FILETYPE_IMG && $file['size'] > $this->_max_upload_image_size) {
                         $GLOBALS['gui']->setError(sprintf($GLOBALS['lang']['filemanager']['error_file_upload_size'], $file['name'], formatBytes($this->_max_upload_image_size, true, 0)));

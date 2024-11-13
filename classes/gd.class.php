@@ -31,7 +31,7 @@ class GD
 
     ##############################################
 
-    public function __construct($targetDir, $maxImage = false, $jpegQuality = 100)
+    public function __construct($targetDir, $maxImage = false, $jpegQuality = 80)
     {
         if (substr($targetDir, -1) != '/') {
             $targetDir .= '/';
