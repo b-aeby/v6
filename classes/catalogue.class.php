@@ -203,10 +203,13 @@ class Catalogue
         if (is_array($optionsArray)) {
             foreach ($optionsArray as $value) {
                 if (is_numeric($value)) {
-                    $assign_ids[] = $value;
+                    $assign_ids[] = (int)$value;
                 }
                 if (is_array($value)) {
-                    foreach ($value as $val) $assign_ids[] = $val;
+                    foreach ($value as $val) {
+                        if(!is_numeric($val)) continue;
+                        $assign_ids[] = (int)$val;
+                    }
                 }
             }
 
