@@ -1034,6 +1034,8 @@ If you do not define any query parameters, this endpoint will return a sum for e
 
 Categories allow you to group your emails together according to broad topics that you define. For more information, please see our [User Guide](https://sendgrid.com/docs/User_Guide/Statistics/categories.html).
 
+Note: Category statistics are available for the previous thirteen months only.
+
 ### GET /categories/stats/sums
 
 
@@ -1803,7 +1805,7 @@ print_r($response->headers());
 | **Device** | **Description** | **Example** |
 |---|---|---|
 | Desktop | Email software on a desktop computer. | I.E., Outlook, Sparrow, or Apple Mail. |
-| Webmail |	A web-based email client. | I.E., Yahoo, Google, AOL, or Outlook.com. |
+| Webmail | A web-based email client. | I.E., Yahoo, Google, AOL, or Outlook.com. |
 | Phone | A smartphone. | iPhone, Android, Blackberry, etc.
 | Tablet | A tablet computer. | iPad, Android based tablet, etc. |
 | Other | An unrecognized device. |
@@ -1827,7 +1829,7 @@ print_r($response->headers());
 ## Getting Started With the Email Activity Feed API
 
 **This endpoint allows you to query your messages.**
- 
+
 Email Activity Feed allows you to search and download a CSV of your recent email event activity. For more information on how to get started, please see our [Getting Started Guide](https://sendgrid.com/docs/API_Reference/Web_API_v3/Tutorials/getting_started_email_activity_api.html).
 
 <a name="geo"></a>
@@ -2173,6 +2175,9 @@ This endpoint allows you to send the email over Twilio SendGrid's v3 Web API, th
 * Top level parameters are referred to as "global".
 * Individual fields within the personalizations array will override any other global, or message level, parameters that are defined outside of personalizations.
 
+* Note: bypass_bounce_management, bypass_spam_management, and bypass_unsubscribe_management cannot
+* be combined with bypass_list_management
+
 For an overview of the v3 Mail Send endpoint, please visit our [v3 API Reference](https://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/index.html)
 
 For more detailed information about how to use the v3 Mail Send endpoint, please visit our [Classroom](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/index.html).
@@ -2228,9 +2233,19 @@ $request_body = json_decode('{
       "email": "ben.doe@example.com",
       "enable": true
     },
+    "bypass_bounce_management": {
+      "enable": true
+    },
     "bypass_list_management": {
       "enable": true
     },
+    "bypass_spam_management": {
+      "enable": true
+    },
+    "bypass_unsubscribe_management": {
+      "enable": true
+    },
+
     "footer": {
       "enable": true,
       "html": "<p>Thanks</br>The Twilio SendGrid Team</p>",
@@ -3164,7 +3179,7 @@ print $response->statusCode() . "\n";
 print $response->body() . "\n";
 print_r($response->headers());
 ```
-## Remove an IP from a domain authenticaiton.
+## Remove an IP from a domain authentication.
 
 **This endpoint allows you to remove a domain's IP address from that domain's authentication.**
 

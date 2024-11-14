@@ -3,6 +3,8 @@
 clean:
 	@rm -rf vendor composer.lock sendgrid-php.zip
 
+php_version = `php -v | head -n 1 | cut -d " " -f 2`
+
 install: clean
 ifdef GIT_HUB_TOKEN
 	composer config -g github-oauth.github.com $(GIT_HUB_TOKEN)
@@ -19,6 +21,8 @@ ci-install: clean
 
 test:
 	vendor/bin/phpunit test/unit --filter test*
+	vendor/bin/phpcs lib/*/*
+	vendor/bin/phpstan analyse --memory-limit 1G --no-progress --level 1 lib test
 
 test-integ: test
 	vendor/bin/phpunit test --filter test*
@@ -30,4 +34,4 @@ test-docker:
 	dependencies=highest version=$(version) bash ./prism.sh
 
 bundle: ci-install
-	zip -r sendgrid-php.zip . -x \*.git\* \*composer.json\* \*scripts\* \*test\* \*.travis.yml\* \*prism\*
+	zip -r sendgrid-php.zip . -x \*.git\* \*composer.json\* \*scripts\* \*test\* \*prism\*

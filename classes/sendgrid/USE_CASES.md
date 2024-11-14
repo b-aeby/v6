@@ -9,6 +9,8 @@ This documentation provides examples for specific use cases. Please [open an iss
 - [Send an Email to a Single Recipient](#send-an-email-to-a-single-recipient)
 - [Send an Email to Multiple Recipients](#send-an-email-to-multiple-recipients)
 - [Send Multiple Emails to Multiple Recipients](#send-multiple-emails-to-multiple-recipients)
+- [Send Multiple Emails with Personalizations](#multiple-email-personalizations)
+- [Set Region](#set-region)
 - [Transactional Templates](#transactional-templates)
 - [Legacy Templates](#legacy-templates)
 - [Send an Email With Twilio Email (Pilot)](#send-an-email-with-twilio-email-pilot)
@@ -62,15 +64,15 @@ try {
 <a name="box-attachment-example"></a>
 # Attaching a File from Box
 
-You can attach a file from [Box](https://www.box.com) to your emails. 
-Because there is no official Box SDK for PHP, this example requires 
-[firebase/php-jwt](https://github.com/firebase/php-jwt) to generate a 
-[JSON Web Token](https://jwt.io) assertion. Before using this code, you should 
-set up a JWT application on [Box](https://developer.box.com/docs/setting-up-a-jwt-app). 
-For more information about authenticating with JWT, see 
+You can attach a file from [Box](https://www.box.com) to your emails.
+Because there is no official Box SDK for PHP, this example requires
+[firebase/php-jwt](https://github.com/firebase/php-jwt) to generate a
+[JSON Web Token](https://jwt.io) assertion. Before using this code, you should
+set up a JWT application on [Box](https://developer.box.com/docs/setting-up-a-jwt-app).
+For more information about authenticating with JWT, see
 [this page](https://developer.box.com/docs/construct-jwt-claim-manually).
 
-After completing the setup tutorial, you will want to make sure your app’s 
+After completing the setup tutorial, you will want to make sure your app’s
 configuration settings have at least the following options enabled:
 
 **Application Access**
@@ -84,8 +86,8 @@ configuration settings have at least the following options enabled:
 **Advanced Features**
 * Perform Actions as Users
 
-Remember to reauthorize your app 
-[here](https://app.box.com/master/settings/openbox) after making any changes to 
+Remember to reauthorize your app
+[here](https://app.box.com/master/settings/openbox) after making any changes to
 your app’s JWT scopes.
 
 ```php
@@ -200,12 +202,12 @@ if (isset($fileId) && isset($userId)){
     $result = curl_exec($ch);
     $contentType = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
     curl_close($ch);
-    
+
     $attachmentFilename = end($path);
     $attachmentContent = base64_encode($result);
     $attachmentContentType = $contentType;
-    
-    $email = new \SendGrid\Mail\Mail(); 
+
+    $email = new \SendGrid\Mail\Mail();
     $email->setFrom("test@example.com", "Example User");
     $email->setSubject("Attaching a File from Box");
     $email->addTo("test@example.com", "Example User");
@@ -213,7 +215,7 @@ if (isset($fileId) && isset($userId)){
     $email->addContent(
         "text/html", "<strong>See attached file from Box.</strong>"
     );
-    
+
     $attachment = new \SendGrid\Mail\Attachment();
     $attachment->setContent($attachmentContent);
     $attachment->setType($attachmentContentType);
@@ -256,7 +258,7 @@ $s3 = new S3Client([
 ]);
 try {
     // Get the object.
-	// See https://docs.aws.amazon.com/AmazonS3/latest/dev/RetrieveObjSingleOpPHP.html
+    // See https://docs.aws.amazon.com/AmazonS3/latest/dev/RetrieveObjSingleOpPHP.html
     $result = $s3->getObject([
         'Bucket' => $bucket,
         'Key'    => $keyname
@@ -265,8 +267,8 @@ try {
     $attachmentFilename = end($keyExplode);
     $attachmentContent = base64_encode($result['Body']);
     $attachmentContentType = $result['ContentType'];
-	
-    $email = new \SendGrid\Mail\Mail(); 
+
+    $email = new \SendGrid\Mail\Mail();
     $email->setFrom("test@example.com", "Example User");
     $email->setSubject("Attaching a File from S3");
     $email->addTo("test@example.com", "Example User");
@@ -274,7 +276,7 @@ try {
     $email->addContent(
         "text/html", "<strong>See attached file from S3.</strong>"
     );
-	
+
     $attachment = new \SendGrid\Mail\Attachment();
     $attachment->setContent($attachmentContent);
     $attachment->setType($attachmentContentType);
@@ -308,8 +310,8 @@ use SendGrid\Mail\Mail;
 
 $email = new Mail();
 
-// For a detailed description of each of these settings, 
-// please see the 
+// For a detailed description of each of these settings,
+// please see the
 // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
 $email->setSubject("Sending with Twilio SendGrid is Fun 2");
 
@@ -366,7 +368,7 @@ $email->addCustomArgs($customArgs);
 $email->setSendAt(1461775051);
 
 // You can add a personalization index or personalization parameter to the above
-// methods to add and update multiple personalizations. You can learn more about 
+// methods to add and update multiple personalizations. You can learn more about
 // personalizations [here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html).
 
 // The values below this comment are global to an entire message
@@ -397,17 +399,17 @@ $email->addAttachment(
     "Banner"
 );
 $attachments = [
-    [   
+    [
         "base64 encoded content2",
-        "banner2.jpeg",
         "image/jpeg",
+        "banner2.jpeg",
         "attachment",
         "Banner 3"
     ],
     [
         "base64 encoded content3",
-        "banner3.gif",
         "image/gif",
+        "banner3.gif",
         "inline",
         "Banner 3"
     ]
@@ -449,7 +451,12 @@ $email->setIpPoolName("23");
 
 // Mail Settings
 $email->setBccSettings(true, "bcc@example.com");
+// Note: Bypass Spam, Bounce, and Unsubscribe management cannot
+// be combined with Bypass List Management
+$email->enableBypassBounceManagement();
 $email->enableBypassListManagement();
+$email->enableBypassSpamManagement();
+$email->enableBypassUnsubscribeManagement();
 //$email->disableBypassListManagement();
 $email->setFooter(true, "Footer", "<strong>Footer</strong>");
 $email->enableSandBoxMode();
@@ -497,7 +504,10 @@ use SendGrid\Mail\Attachment;
 use SendGrid\Mail\BatchId;
 use SendGrid\Mail\Bcc;
 use SendGrid\Mail\BccSettings;
+use SendGrid\Mail\BypassBounceManagement;
 use SendGrid\Mail\BypassListManagement;
+use SendGrid\Mail\BypassSpamManagement;
+use SendGrid\Mail\BypassUnsubscribeManagement;
 use SendGrid\Mail\Category;
 use SendGrid\Mail\Cc;
 use SendGrid\Mail\ClickTracking;
@@ -529,8 +539,8 @@ use SendGrid\Mail\TrackingSettings;
 
 $email = new Mail();
 
-// For a detailed description of each of these settings, 
-// please see the 
+// For a detailed description of each of these settings,
+// please see the
 // [documentation](https://sendgrid.com/docs/API_Reference/api_v3.html).
 $email->setSubject(
     new Subject("Sending with Twilio SendGrid is Fun 2")
@@ -538,14 +548,14 @@ $email->setSubject(
 
 $email->addTo(new To("test@example.com", "Example User"));
 $email->addTo(new To("test+1@example.com", "Example User1"));
-$toEmails = [ 
+$toEmails = [
     new To("test+2@example.com", "Example User2"),
     new To("test+3@example.com", "Example User3")
 ];
 $email->addTos($toEmails);
 
 $email->addCc(new Cc("test+4@example.com", "Example User4"));
-$ccEmails = [ 
+$ccEmails = [
     new Cc("test+5@example.com", "Example User5"),
     new Cc("test+6@example.com", "Example User6")
 ];
@@ -554,7 +564,7 @@ $email->addCcs($ccEmails);
 $email->addBcc(
     new Bcc("test+7@example.com", "Example User7")
 );
-$bccEmails = [ 
+$bccEmails = [
     new Bcc("test+8@example.com", "Example User8"),
     new Bcc("test+9@example.com", "Example User9")
 ];
@@ -597,7 +607,7 @@ $email->addCustomArgs($customArgs);
 $email->setSendAt(new SendAt(1461775051));
 
 // You can add a personalization index or personalization parameter to the above
-// methods to add and update multiple personalizations. You can learn more about 
+// methods to add and update multiple personalizations. You can learn more about
 // personalizations [here](https://sendgrid.com/docs/Classroom/Send/v3_Mail_Send/personalizations.html).
 
 // The values below this comment are global to an entire message
@@ -711,9 +721,24 @@ $mail_settings = new MailSettings();
 $mail_settings->setBccSettings(
     new BccSettings(true, "bcc@example.com")
 );
+
+// Note: Bypass Spam, Bounce, and Unsubscribe management cannot
+// be combined with Bypass List Management
+$mail_settings->setBypassBounceManagement(
+    new BypassBounceManagement(true)
+);
+$mail_settings->setBypassSpamManagement(
+    new BypassSpamManagement(true)
+);
+$mail_settings->setBypassUnsubscribeManagement(
+    new BypassUnsubscribeManagement(true)
+);
+
+// OR
 $mail_settings->setBypassListManagement(
     new BypassListManagement(true)
 );
+
 $mail_settings->setFooter(
     new Footer(true, "Footer", "<strong>Footer</strong>")
 );
@@ -771,7 +796,7 @@ try {
 
 use SendGrid\Mail\Mail;
 
-$email = new Mail(); 
+$email = new Mail();
 $email->setFrom("test@example.com", "Example User");
 $email->setSubject("Sending with Twilio SendGrid is Fun");
 $email->addTo("test@example.com", "Example User");
@@ -841,9 +866,9 @@ try {
 
 use SendGrid\Mail\Mail;
 
-$email = new Mail(); 
+$email = new Mail();
 $email->setFrom("test@example.com", "Example User");
-$tos = [ 
+$tos = [
     "test+test1@example.com" => "Example User1",
     "test+test2@example.com" => "Example User2",
     "test+test3@example.com" => "Example User3"
@@ -865,7 +890,7 @@ try {
 }
 ```
 
-OR 
+OR
 
 ```php
 <?php
@@ -880,7 +905,7 @@ use SendGrid\Mail\Subject;
 use SendGrid\Mail\To;
 
 $from = new From("test@example.com", "Example User");
-$tos = [ 
+$tos = [
     new To("test+test1@example.com", "Example User1"),
     new To("test+test2@example.com", "Example User2"),
     new To("test+test3@example.com", "Example User3")
@@ -957,7 +982,7 @@ $tos = [
         ]
     )
 ];
-$subject = new Subject("Hi -name-!"); // default subject 
+$subject = new Subject("Hi -name-!"); // default subject
 $globalSubstitutions = [
     '-time-' => "2018-05-03 23:10:29"
 ];
@@ -1062,10 +1087,113 @@ try {
 }
 ```
 
+<a name="multiple-email-personalizations"></a>
+# Send Multiple Emails with Personalizations
+
+```php
+<?php
+// Uncomment next line if you're not using a dependency loader (such as Composer)
+// require_once '<PATH TO>/sendgrid-php.php';
+
+use SendGrid\Mail\From;
+use SendGrid\Mail\Mail;
+use SendGrid\Mail\Personalization;
+use SendGrid\Mail\Subject;
+use SendGrid\Mail\To;
+
+$from = new From("test@example.com", "Twilio Sendgrid");
+$to = new To(
+    "test+test1@example.com",
+    "Example User1",
+    [
+        '-name-' => 'Example User 1'
+    ],
+    "Example User1 -name-"
+ );
+$subject = new Subject("Hello from Twilio Sendgrid!");
+$plainTextContent = new PlainTextContent(
+    "How's it going -name-?"
+);
+$htmlContent = new HtmlContent(
+    "<strong>How's it going -name-?</strong>"
+);
+$email = new Mail($from, $to, $subject, $plainTextContent, $htmlContent);
+
+$personalization0 = new Personalization();
+$personalization0->addTo(new To(
+        "test+test2@example.com",
+        "Example User2",
+        [
+            '-name-' => 'Example User 2'
+        ],
+        "Example User2 -name-"
+));
+$personalization0->addTo(new To(
+        "test+test3@example.com",
+        "Example User3",
+        [
+            '-name-' => 'Example User 3'
+        ],
+        "Example User3 -name-"
+));
+$personalization0->setSubject(new Subject("Hello from Twilio Sendgrid!"));
+$email->addPersonalization($personalization0);
+
+$personalization1 = new Personalization();
+$personalization1->addTo(new To(
+        "test+test3@example.com",
+        "Example User4",
+        [
+            '-name-' => 'Example User 4'
+        ],
+        "Example User4 -name-"
+));
+$personalization1->addTo(new To(
+        "test+test4@example.com",
+        "Example User5",
+        [
+            '-name-' => 'Example User 5'
+        ],
+        "Example User5 -name-"
+));
+$personalization1->addFrom(new From(
+    "test5@example.com" => "Twilio"
+))
+$personalization1->setSubject(new Subject("Hello from Twilio!"));
+$mail->addPersonalization($personalization1);
+
+$sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
+try {
+    $response = $sendgrid->send($email);
+    print $response->statusCode() . "\n";
+    print_r($response->headers());
+    print $response->body() . "\n";
+} catch (Exception $e) {
+    echo 'Caught exception: '.  $e->getMessage(). "\n";
+}
+```
+
+<a name="set-region"></a>
+# Set Region
+The SendGrid object can also be used to set the region to "eu", which will send the request to https://api.eu.sendgrid.com/. By default, it is set to https://api.sendgrid.com/, e.g.
+
+```php
+<?php
+// Uncomment next line if you're not using a dependency loader (such as Composer)
+// require_once '<PATH TO>/sendgrid-php.php';
+
+$sendgrid = new \SendGrid(getenv('SENDGRID_API_KEY'));
+$sendgrid->setDataResidency("eu");
+
+OR
+
+$sendgrid->setDataResidency("global");
+```
+
 <a name="transactional-templates"></a>
 # Transactional Templates
 
-For this example, we assume you have created a [transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/create_and_edit_transactional_templates.html) in the UI or via the API. Following is the template content we used for testing.
+For this example, we assume you have created a [dynamic transactional template](https://sendgrid.com/docs/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates/) in the UI or via the API. Following is the template content we used for testing.
 
 Template ID (replace with your own):
 
@@ -1175,7 +1303,7 @@ $email->addTo(
     0
 );
 $email->addTo(
-    "test+test2@example.com", 
+    "test+test2@example.com",
     "Example User2",
     [
         "subject" => "Subject 2",
@@ -1185,7 +1313,7 @@ $email->addTo(
     1
 );
 $email->addTo(
-    "test+test3@example.com", 
+    "test+test3@example.com",
     "Example User3",
     [
         "subject" => "Subject 3",
@@ -1209,7 +1337,7 @@ try {
 <a name="legacy-templates"></a>
 # Legacy Templates
 
-For this example, we assume you have created a [legacy template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/create_and_edit_transactional_templates.html). Following is the template content we used for testing.
+For this example, we assume you have created a [legacy transactional template](https://sendgrid.com/docs/User_Guide/Transactional_Templates/index.html) in the UI or via the API. Following is the template content we used for testing.
 
 Template ID (replace with your own):
 
@@ -1256,7 +1384,7 @@ use \SendGrid\Mail\HtmlContent;
 use \SendGrid\Mail\Mail;
 
 $from = new From("test@example.com", "Example User");
-$tos = [ 
+$tos = [
     new To(
         "test+test1@example.com",
         "Example User1",
@@ -1282,7 +1410,7 @@ $tos = [
         ]
     )
 ];
-$subject = new Subject("I'm replacing the subject tag"); 
+$subject = new Subject("I'm replacing the subject tag");
 $plainTextContent = new PlainTextContent(
     "I'm replacing the **body tag**"
 );
@@ -1317,31 +1445,31 @@ OR
 
 use SendGrid\Mail\Mail;
 
-$email = new Mail(); 
+$email = new Mail();
 $email->setFrom("test@sendgrid.com", "Example User");
 $email->setSubject("I'm replacing the subject tag");
 $email->addTo(
-    "test+test1@example.com", 
+    "test+test1@example.com",
     "Example User1",
-    [ 
+    [
         "-name-" => "Example User 1",
         "-city-" => "Denver"
     ],
     0
 );
 $email->addTo(
-    "test+test2@example.com", 
+    "test+test2@example.com",
     "Example User2",
-    [ 
+    [
         "-name-" => "Example User 2",
         "-city-" => "Denver"
     ],
     1
 );
 $email->addTo(
-    "test+test3@example.com", 
+    "test+test3@example.com",
     "Example User3",
-    [ 
+    [
         "-name-" => "Example User 3",
         "-city-" => "Redwood City"
     ],
@@ -1469,9 +1597,9 @@ Find more information about all of Twilio SendGrid's authentication related docu
 <a name="email-stats"></a>
 # How to View Email Statistics
 
-You can find documentation for how to view your email statistics via the UI [here](https://app.example.com/statistics) and via API [here](USAGE.md#stats).
+You can find documentation for how to view your email statistics via the UI [here](https://app.sendgrid.com/statistics) and via API [here](USAGE.md#stats).
 
-Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://example.com/docs/API_Reference/Webhooks/event.html) about events that occur as Twilio SendGrid processes your email.
+Alternatively, we can post events to a URL of your choice via our [Event Webhook](https://sendgrid.com/docs/for-developers/tracking-events/event/) about events that occur as Twilio SendGrid processes your email.
 
 <a name="email-activity"></a>
 # How to Use the Email Activity Feed API

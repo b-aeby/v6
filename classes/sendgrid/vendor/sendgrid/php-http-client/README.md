@@ -1,29 +1,26 @@
 ![SendGrid Logo](twilio_sendgrid_logo.png)
 
-[![Travis Badge](https://travis-ci.org/sendgrid/php-http-client.svg?branch=main)](https://travis-ci.org/sendgrid/php-http-client)
+[![Tests](https://github.com/sendgrid/php-http-client/actions/workflows/test-and-deploy.yml/badge.svg)](https://github.com/sendgrid/php-http-client/actions/workflows/test-and-deploy.yml)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/sendgrid/php-http-client.svg?style=flat-square)](https://packagist.org/packages/sendgrid/php-http-client)
-[![Email Notifications Badge](https://dx.sendgrid.com/badge/php)](https://dx.sendgrid.com/newsletter/php)
 [![Twitter Follow](https://img.shields.io/twitter/follow/sendgrid.svg?style=social&label=Follow)](https://twitter.com/sendgrid)
 [![GitHub contributors](https://img.shields.io/github/contributors/sendgrid/php-http-client.svg)](https://github.com/sendgrid/php-http-client/graphs/contributors)
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 **Quickly and easily access any RESTful or RESTful-like API.**
 
 If you are looking for the SendGrid API client library, please see [this repo](https://github.com/sendgrid/sendgrid-php).
 
 # Announcements
-**The default branch name for this repository has been changed to `main` as of 07/27/2020.**
-
 All updates to this library are documented in our [CHANGELOG](CHANGELOG.md).
 
 # Table of Contents
 - [Installation](#installation)
 - [Quick Start](#quick-start)
 - [Usage](#usage)
-- [Roadmap](#roadmap)
 - [How to Contribute](#contribute)
 - [Thanks](#thanks)
 - [About](#about)
+- [Support](#support)
 - [License](#license)
 
 <a name="installation"></a>
@@ -31,7 +28,7 @@ All updates to this library are documented in our [CHANGELOG](CHANGELOG.md).
 
 ## Prerequisites
 
-- PHP version 5.6, 7.0, 7.1, 7.2, 7.3, or 7.4
+- PHP version 7.3, 7.4, 8.0, or 8.1
 
 ## Install with Composer
 
@@ -40,7 +37,7 @@ Add php-http-client to your `composer.json` file. If you are not using [Composer
 ```json
 {
   "require": {
-    "sendgrid/php-http-client": "^3.11.1"
+    "sendgrid/php-http-client": "^4.1.1"
   }
 }
 ```
@@ -164,11 +161,6 @@ You can do the following to create a .env file:
 
 Then, just add your API Key into your .env file.
 
-<a name="roadmap"></a>
-# Roadmap
-
-If you are interested in the future direction of this project, please take a look at our [milestones](https://github.com/sendgrid/php-http-client/milestones). We would love to hear your feedback.
-
 <a name="contribute"></a>
 # How to Contribute
 
@@ -191,10 +183,11 @@ We were inspired by the work done on [birdy](https://github.com/inueni/birdy) an
 
 php-http-client is maintained and funded by Twilio SendGrid, Inc. The names and logos for php-http-client are trademarks of Twilio SendGrid, Inc.
 
-If you need help installing or using the library, please check the [Twilio SendGrid Support Help Center](https://support.sendgrid.com).
+<a name="support">
+# Support
 
-If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
+If you need help using SendGrid, please check the [Twilio SendGrid Support Help Center](https://support.sendgrid.com).
 
 <a name="license"></a>
 # License
-[The MIT License (MIT)](LICENSE.md)
+[The MIT License (MIT)](LICENSE)

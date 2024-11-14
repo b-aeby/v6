@@ -1,26 +1,22 @@
 ![SendGrid Logo](twilio_sendgrid_logo.png)
 
-[![BuildStatus](https://travis-ci.org/sendgrid/sendgrid-php.svg?branch=main)](https://travis-ci.org/sendgrid/sendgrid-php)
+[![BuildStatus](https://github.com/sendgrid/sendgrid-php/actions/workflows/test-and-deploy.yml/badge.svg)](https://github.com/sendgrid/sendgrid-php/actions/workflows/test-and-deploy.yml)
 [![Packagist](https://img.shields.io/packagist/v/sendgrid/sendgrid.svg)](https://packagist.org/packages/sendgrid/sendgrid)
 [![Downloads](https://img.shields.io/packagist/dt/sendgrid/sendgrid.svg?maxAge=3600)](https://packagist.org/packages/sendgrid/sendgrid)
-[![Email Notifications Badge](https://dx.sendgrid.com/badge/php)](https://dx.sendgrid.com/newsletter/php)
-[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE.md)
+[![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Twitter Follow](https://img.shields.io/twitter/follow/sendgrid.svg?style=social&label=Follow)](https://twitter.com/sendgrid)
 [![GitHub contributors](https://img.shields.io/github/contributors/sendgrid/sendgrid-php.svg)](https://github.com/sendgrid/sendgrid-php/graphs/contributors)
 [![Open Source Helpers](https://www.codetriage.com/sendgrid/sendgrid-php/badges/users.svg)](https://www.codetriage.com/sendgrid/sendgrid-php)
 
 **NEW:**
 
-**The default branch name for this repository has been changed to `main` as of 07/27/2020.**
-
-- Subscribe to email [notifications](https://dx.sendgrid.com/newsletter/php) for releases and breaking changes.
 - Send SMS messages with [Twilio](USE_CASES.md#sms).
 
 **This library allows you to quickly and easily use the Twilio SendGrid Web API v3 via PHP.**
 
 Version 7.X.X of this library provides full support for all Twilio SendGrid [Web API v3](https://sendgrid.com/docs/API_Reference/Web_API_v3/index.html) endpoints, including the new [v3 /mail/send](https://sendgrid.com/blog/introducing-v3mailsend-sendgrids-new-mail-endpoint).
 
-We want this library to be community driven and Twilio SendGrid led. Your help is needed to realize this goal. To help make sure we are building the right things in the right order, we ask that you create [issues](https://github.com/sendgrid/sendgrid-php/issues) and [pull requests](CONTRIBUTING.md) or simply upvote or comment on existing issues or pull requests.
+**If you need support using SendGrid, please check the [Twilio SendGrid Support Help Center](https://support.sendgrid.com).**
 
 Please browse the rest of this README for further details.
 
@@ -33,10 +29,10 @@ We appreciate your continued support, thank you!
 * [Use Cases](#use-cases)
 * [Usage](#usage)
 * [Announcements](#announcements)
-* [Roadmap](#roadmap)
 * [How to Contribute](#contribute)
 * [Troubleshooting](#troubleshooting)
 * [About](#about)
+* [Support](#support)
 * [License](#license)
 
 <a name="installation"></a>
@@ -44,7 +40,7 @@ We appreciate your continued support, thank you!
 
 ## Prerequisites
 
-- PHP version 5.6, 7.0, 7.1, 7.2, 7.3, or 7.4
+- PHP version 7.3, 7.4, 8.0, or 8.1
 - The Twilio SendGrid service, starting at the [free level](https://sendgrid.com/free?source=sendgrid-php) to send up to 40,000 emails for the first 30 days, then send 100 emails/day free forever or check out [our pricing](https://sendgrid.com/pricing?source=sendgrid-php).
 - For SMS messages, you will need a free [Twilio account](https://www.twilio.com/try-twilio?source=sendgrid-php).
 
@@ -76,9 +72,9 @@ Add Twilio SendGrid to your `composer.json` file. If you are not using [Composer
 
 ### Alternative: Install package from zip
 
-If you are not using Composer, simply download and install the **[latest packaged release of the library as a zip](https://github.com/sendgrid/sendgrid-php/releases/download/7.8.2/sendgrid-php.zip)**.
+If you are not using Composer, simply download and install the **[latest packaged release of the library as a zip](https://github.com/sendgrid/sendgrid-php/releases/download/8.1.2/sendgrid-php.zip)**.
 
-[**⬇︎ Download Packaged Library ⬇︎**](https://github.com/sendgrid/sendgrid-php/releases/download/7.8.2/sendgrid-php.zip)
+[**⬇︎ Download Packaged Library ⬇︎**](https://github.com/sendgrid/sendgrid-php/releases/download/8.1.2/sendgrid-php.zip)
 
 Previous versions of the library can be downloaded directly from [GitHub](https://github.com/sendgrid/sendgrid-php/releases).
 
@@ -177,12 +173,7 @@ try {
 
 v7 has been released! Please see the [release notes](https://github.com/sendgrid/sendgrid-php/releases/tag/v7.0.0) for details.
 
-All updates to this library are documented in our [CHANGELOG](CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-php/releases). You may also subscribe to email [release notifications](https://dx.sendgrid.com/newsletter/php) for releases and breaking changes.
-
-<a name="roadmap"></a>
-# Roadmap
-
-If you are interested in the future direction of this project, please take a look at our open [issues](https://github.com/sendgrid/sendgrid-php/issues) and [pull requests](https://github.com/sendgrid/sendgrid-php/pulls). We would love to hear your feedback.
+All updates to this library are documented in our [CHANGELOG](CHANGELOG.md) and [releases](https://github.com/sendgrid/sendgrid-php/releases).
 
 <a name="contribute"></a>
 # How to Contribute
@@ -206,9 +197,10 @@ Please see our [troubleshooting guide](TROUBLESHOOTING.md) for common library is
 
 sendgrid-php is maintained and funded by Twilio SendGrid, Inc. The names and logos for sendgrid-php are trademarks of Twilio SendGrid, Inc.
 
-If you need help installing or using the library, please check the [Twilio SendGrid Support Help Center](https://support.sendgrid.com).
+<a name="support"></a>
+# Support
 
-If you've instead found a bug in the library or would like new features added, go ahead and open issues or pull requests against this repo!
+For product support, please check the [Twilio SendGrid Support Help Center](https://support.sendgrid.com).
 
 # License
-[The MIT License (MIT)](LICENSE.md)
+[The MIT License (MIT)](LICENSE)
