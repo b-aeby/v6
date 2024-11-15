@@ -160,7 +160,7 @@ class Newsletter
                 } else {
                     ini_set('ignore_user_abort', true);
                     // Send to all subscribers
-                    $limit = 100;
+                    $limit = 20;
                     $where = array('status' => '1');
                     if ($content['dbl_opt']==1) {
                         $where['dbl_opt'] = 1;
