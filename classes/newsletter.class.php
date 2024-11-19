@@ -328,6 +328,9 @@ class Newsletter
             if ($validate) {
                 $this->_subscriberLog($validate[0]['email'], 'Double opt-in verified');
                 $GLOBALS['db']->update('CubeCart_newsletter_subscriber', array('dbl_opt' => '1', 'date' => date('c'), 'ip_address' => get_ip_address()), array('subscriber_id' => $validate[0]['subscriber_id']));
+                foreach ($GLOBALS['hooks']->load('class.newsletter.validated') as $hook) {
+                    include $hook;
+                }
                 return true;
             }
         }

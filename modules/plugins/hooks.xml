@@ -239,6 +239,7 @@
 	<hook trigger="class.mailer.send" deprecated="" />
 	<hook trigger="class.newsletter.subscribe" deprecated="" />
 	<hook trigger="class.newsletter.unsubscribe" deprecated="" />
+	<hook trigger="class.newsletter.validated" deprecated="" />
 	<hook trigger="class.order.delete" deprecated="" />
 	<hook trigger="class.order.manage_stock" deprecated="" />
 	<hook trigger="class.order.order_summary" deprecated="" />
