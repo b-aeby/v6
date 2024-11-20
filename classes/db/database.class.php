@@ -141,6 +141,12 @@ class Database_Contoller
      *
      * @var instance
      */
+    private $_skip_math_fields = array('phone', 'mobile');
+    /**
+     * Fields to ignore math
+     *
+     * @var array
+     */
     protected static $_instance;
 
     ##############################################
@@ -878,6 +884,7 @@ class Database_Contoller
      */
     public function update($table, $record, $where = '', $purge = true, $skip_math_fields = array())
     {
+        $skip_math_fields = array_merge($skip_math_fields, $this->_skip_math_fields);
         if (is_array($record)) {
             $allowed = $this->getFields($table);
             foreach ($record as $field => $value) {
