@@ -173,57 +173,61 @@ $GLOBALS['main']->wikiPage('Dashboard');
 $GLOBALS['main']->addTabControl($lang['dashboard']['title_dashboard'], 'dashboard');
 ## Quick Stats
 if (Admin::getInstance()->permissions('statistics', CC_PERM_READ, false, false)) {
-    $total_sales = $GLOBALS['db']->query('SELECT SUM(`total`) as `total_sales` FROM `'.$GLOBALS['config']->get('config', 'dbprefix').'CubeCart_order_summary` WHERE `status` = 3;');
-    $quick_stats['total_sales'] = Tax::getInstance()->priceFormat((float)$total_sales[0]['total_sales']);
+    if (!$GLOBALS['session']->has('chart_data')) {
+        $total_sales = $GLOBALS['db']->query('SELECT SUM(`total`) as `total_sales` FROM `'.$GLOBALS['config']->get('config', 'dbprefix').'CubeCart_order_summary` WHERE `status` = 3;');
+        $quick_stats['total_sales'] = Tax::getInstance()->priceFormat((float)$total_sales[0]['total_sales']);
 
-    $ave_order  = $GLOBALS['db']->query('SELECT AVG(`total`) as `ave_order` FROM `'.$GLOBALS['config']->get('config', 'dbprefix').'CubeCart_order_summary` WHERE `status` = 3;');
-    $quick_stats['ave_order'] = Tax::getInstance()->priceFormat((float)$ave_order[0]['ave_order']);
+        $ave_order  = $GLOBALS['db']->query('SELECT AVG(`total`) as `ave_order` FROM `'.$GLOBALS['config']->get('config', 'dbprefix').'CubeCart_order_summary` WHERE `status` = 3;');
+        $quick_stats['ave_order'] = Tax::getInstance()->priceFormat((float)$ave_order[0]['ave_order']);
 
-    $this_year    = date('Y');
-    $this_month   = date('m');
-    $this_month_start  = mktime(0, 0, 0, $this_month, '01', $this_year);
-    ## Work out prev month looks silly but should stop -1 month on 1st March returning January (28 Days in Feb)
-    $last_month   = date('m', strtotime("-1 month", mktime(12, 0, 0, $this_month, 15, $this_year)));
-    $last_year    = ($last_month < $this_month) ? $this_year : ($this_year - 1);
-    $last_month_start  = mktime(0, 0, 0, $last_month, '01', $last_year);
-    $last_year_start   = mktime(0, 0, 0, '01', '01', $this_year - 1);
+        $this_year    = date('Y');
+        $this_month   = date('m');
+        $this_month_start  = mktime(0, 0, 0, $this_month, '01', $this_year);
+        ## Work out prev month looks silly but should stop -1 month on 1st March returning January (28 Days in Feb)
+        $last_month   = date('m', strtotime("-1 month", mktime(12, 0, 0, $this_month, 15, $this_year)));
+        $last_year    = ($last_month < $this_month) ? $this_year : ($this_year - 1);
+        $last_month_start  = mktime(0, 0, 0, $last_month, '01', $last_year);
+        $last_year_start   = mktime(0, 0, 0, '01', '01', $this_year - 1);
 
-    $last_month_sales  = $GLOBALS['db']->query('SELECT SUM(`total`) as `last_month` FROM `'.$GLOBALS['config']->get('config', 'dbprefix').'CubeCart_order_summary` WHERE `status` in(2,3) AND `order_date` > '.$last_month_start.' AND `order_date` < '.$this_month_start.';');
-    $quick_stats['last_month'] = Tax::getInstance()->priceFormat((float)$last_month_sales[0]['last_month']);
+        $last_month_sales  = $GLOBALS['db']->query('SELECT SUM(`total`) as `last_month` FROM `'.$GLOBALS['config']->get('config', 'dbprefix').'CubeCart_order_summary` WHERE `status` in(2,3) AND `order_date` > '.$last_month_start.' AND `order_date` < '.$this_month_start.';');
+        $quick_stats['last_month'] = Tax::getInstance()->priceFormat((float)$last_month_sales[0]['last_month']);
 
-    $this_month_sales  = $GLOBALS['db']->query('SELECT SUM(`total`) as `this_month` FROM `'.$GLOBALS['config']->get('config', 'dbprefix').'CubeCart_order_summary` WHERE `status` in(2,3) AND `order_date` > '.$this_month_start.';');
-    $quick_stats['this_month'] = Tax::getInstance()->priceFormat((float)$this_month_sales[0]['this_month']);
+        $this_month_sales  = $GLOBALS['db']->query('SELECT SUM(`total`) as `this_month` FROM `'.$GLOBALS['config']->get('config', 'dbprefix').'CubeCart_order_summary` WHERE `status` in(2,3) AND `order_date` > '.$this_month_start.';');
+        $quick_stats['this_month'] = Tax::getInstance()->priceFormat((float)$this_month_sales[0]['this_month']);
 
-    $GLOBALS['smarty']->assign('QUICK_STATS', $quick_stats);
+        $GLOBALS['smarty']->assign('QUICK_STATS', $quick_stats);
 
-    ## Statistics (Google Charts)
-    $sales = $GLOBALS['db']->select('CubeCart_order_summary', array('order_date', 'total'), array('order_date' => '>='.$last_year_start, 'status' => array(2, 3), 'total' => '>0'));
-    $data= array();
-    if ($sales) { ## Get data to put in chart
-        foreach ($sales as $sale) {
-            $year = date('Y', $sale['order_date']);
-            $month = date('M', $sale['order_date']);
-            if (isset($data[$year][$month])) {
-                $data[$year][$month] += sprintf('%0.2f', $sale['total']);
-            } else {
-                $data[$year][$month] = sprintf('%0.2f', $sale['total']);
+        ## Statistics (Google Charts)
+        $sales = $GLOBALS['db']->select('CubeCart_order_summary', array('order_date', 'total'), array('order_date' => '>='.$last_year_start, 'status' => array(2, 3), 'total' => '>0'));
+        $data= array();
+        if ($sales) { ## Get data to put in chart
+            foreach ($sales as $sale) {
+                $year = date('Y', $sale['order_date']);
+                $month = date('M', $sale['order_date']);
+                if (isset($data[$year][$month])) {
+                    $data[$year][$month] += sprintf('%0.2f', $sale['total']);
+                } else {
+                    $data[$year][$month] = sprintf('%0.2f', $sale['total']);
+                }
             }
         }
+
+        $this_year = date('Y');
+        $last_year = $this_year - 1;
+
+        $chart_data['data'] = "['Month', '$this_year', '$last_year'],";
+
+        for ($month = 1; $month <= 12; $month++) {
+            $m = date("M", mktime(0, 0, 0, $month, 10));
+            $last_year_month = (isset($data[$last_year][$m]) && $data[$last_year][$m]>0) ? $data[$last_year][$m] : 0;
+            $this_year_month = (isset($data[$this_year][$m]) && $data[$this_year][$m]>0) ? $data[$this_year][$m] : 0;
+            $chart_data['data'] .= "['$m',  $this_year_month, $last_year_month],";
+        }
+
+        $chart_data['title'] = $lang['dashboard']['title_sales_stats'].': '.$last_year.' - '.$this_year;
+    } else {
+        $chart_data = $GLOBALS['session']->get('chart_data');
     }
-
-    $this_year = date('Y');
-    $last_year = $this_year - 1;
-
-    $chart_data['data'] = "['Month', '$this_year', '$last_year'],";
-
-    for ($month = 1; $month <= 12; $month++) {
-        $m = date("M", mktime(0, 0, 0, $month, 10));
-        $last_year_month = (isset($data[$last_year][$m]) && $data[$last_year][$m]>0) ? $data[$last_year][$m] : 0;
-        $this_year_month = (isset($data[$this_year][$m]) && $data[$this_year][$m]>0) ? $data[$this_year][$m] : 0;
-        $chart_data['data'] .= "['$m',  $this_year_month, $last_year_month],";
-    }
-
-    $chart_data['title'] = $lang['dashboard']['title_sales_stats'].': '.$last_year.' - '.$this_year;
     $GLOBALS['smarty']->assign('CHART', $chart_data);
 }
 ## Last 5 orders
