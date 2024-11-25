@@ -511,6 +511,7 @@ CREATE TABLE IF NOT EXISTS `CubeCart_inventory` (
   KEY `live_from` (`live_from`),
   KEY `popularity` (`popularity`),
   KEY `featured` (`featured`),
+  KEY `use_stock_level` (`use_stock_level`),
   FULLTEXT KEY `fulltext` (`product_code`,`description`,`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; #EOQ
 

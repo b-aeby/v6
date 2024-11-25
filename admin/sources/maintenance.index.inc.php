@@ -768,7 +768,8 @@ if (isset($database_result) && $database_result) {
             'product_code' => 'FULLTEXT',
             'description' => 'FULLTEXT',
             'name' => 'FULLTEXT',
-            'featured' => 'KEY'
+            'featured' => 'KEY',
+            'use_stock_level' => 'KEY'
         ),
         'cubecart_inventory_language' => array(
             'translation_id' => 'PRIMARY',
