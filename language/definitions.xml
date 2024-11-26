@@ -1501,8 +1501,6 @@ This email is sent from the store's master email address but it is possible to r
     <string name="skip_downloads" introduced="6.0.2"><![CDATA[Skip Filemanager Downloads]]></string>
     <string name="cache_clear" introduced="5.0.0"><![CDATA[Clear cache]]></string>
     <string name="cache_image" introduced="5.0.0"><![CDATA[Clear image cache]]></string>
-    <string name="cache_language" introduced="5.0.0"><![CDATA[Clear language cache]]></string>
-    <string name="cache_sql" introduced="5.0.0"><![CDATA[Clear SQL cache]]></string>
     <string name="cache_search" introduced="5.0.0"><![CDATA[Clear search history]]></string>
     <string name="db_data" introduced="5.0.0"><![CDATA[Include data in backup]]></string>
     <string name="db_drop_table" introduced="5.0.0"><![CDATA[Add 'DROP TABLE' to structure]]></string>

@@ -32,7 +32,7 @@ class Cache extends Cache_Controler
      */
     protected $_page_cache_usage = 0;
     protected $_page_cache_file_count = 0;
-    protected $_file_data_split = "\n-- CubeCart Cache Split --\n";
+    protected $_file_data_split = "\n--boundary\n";
 
     ##############################################
 
@@ -76,12 +76,7 @@ class Cache extends Cache_Controler
      */
     public function clear($type = '')
     {
-        if (!empty($type)) {
-            $prefix = '*'.strtolower($type).'*';
-        } else {
-            $prefix = '*';
-        }
-        $this->_clearFileCache($prefix);
+        $this->_clearFileCache();
         clearstatcache();
         return true;
     }
@@ -94,6 +89,7 @@ class Cache extends Cache_Controler
      */
     public function delete($id)
     {
+        $id = shortHash($id);
         clearstatcache(); // Clear cached results
         if (file_exists($this->_cache_path.$this->_makeName($id))) {
             return unlink($this->_cache_path.$this->_makeName($id));
@@ -111,6 +107,7 @@ class Cache extends Cache_Controler
      */
     public function exists($id)
     {
+        $id = shortHash($id);
         if (!$this->status && !$this->statusException($id)) {
             return false;
         }
@@ -146,6 +143,7 @@ class Cache extends Cache_Controler
      */
     public function read($id, $serialized = true)
     {
+        $id = shortHash($id);
         if (!$this->status && !$this->statusException($id)) {
             return false;
         }
@@ -217,6 +215,7 @@ class Cache extends Cache_Controler
      */
     public function write($data, $id, $expire = '', $serialize = true)
     {
+        $id = shortHash($id);
         if (!$this->status && !$this->statusException($id)) {
             return false;
         }

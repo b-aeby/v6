@@ -81,27 +81,12 @@ class Cache extends Cache_Controler
         //Get the current cache IDs
         $this->getIDs();
 
-        if (!empty($type)) {
-            $type = strtolower($type);
-            $len = strlen($type);
-        }
-
         $return = true;
         if (!empty($this->_ids)) {
             //Loop through each id to delete it
             foreach ($this->_ids as $id) {
-                //If there is a type we need to only delete that
-                if (!empty($type)) {
-                    if (substr($id, 0, $len) == $type) {
-                        if (!$this->delete($id)) {
-                            $return = false;
-                        }
-                    }
-                } else {
-                    //If no type delete every id
-                    if (!$this->delete($id)) {
-                        $return = false;
-                    }
+                if (!$this->delete($id)) {
+                    $return = false;
                 }
             }
         }
@@ -117,6 +102,7 @@ class Cache extends Cache_Controler
      */
     public function delete($id)
     {
+        $id = shortHash($id);
         return $this->_memcache->delete($this->_makeName($id));
     }
 
@@ -128,6 +114,7 @@ class Cache extends Cache_Controler
      */
     public function exists($id)
     {
+        $id = shortHash($id);
         if (!$this->status && !$this->statusException($id)) {
             return false;
         }
@@ -177,6 +164,7 @@ class Cache extends Cache_Controler
      */
     public function read($id)
     {
+        $id = shortHash($id);
         if (!$this->status && !$this->statusException($id)) {
             return false;
         }
@@ -242,6 +230,7 @@ class Cache extends Cache_Controler
      */
     public function write($data, $id, $expire = '')
     {
+        $id = shortHash($id);
         if (!$this->status && !$this->statusException($id)) {
             return false;
         }

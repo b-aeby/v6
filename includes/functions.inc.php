@@ -1017,3 +1017,20 @@ function parseUrlToLink($text = '', $target = '_blank')
 	$regex = '<https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)>';
 	return preg_replace($regex, '<a href="$0" target="$target">$0</a>', $text);
 }
+
+/**
+ * Create a short, fairly unique, urlsafe hash for the input string.
+ * https://roytanck.com/2021/10/17/generating-short-hashes-in-php/
+ *
+ * @param string $input
+ * @param int $length
+ *
+ * @return string
+ */
+function shortHash($input, $length = 8)
+{
+	$hash_base64 = base64_encode(hash('sha256', $input.$GLOBALS['glob']['dbdatabase'], true));
+	$hash_urlsafe = strtr($hash_base64, '+/', '-_');
+	$hash_urlsafe = rtrim($hash_urlsafe, '=');
+	return substr($hash_urlsafe, 0, $length);
+}

@@ -22,8 +22,6 @@
   </fieldset>
   <fieldset><legend>{$LANG.maintain.title_rebuild_cache}</legend>
 	<div><label for="clearCache">{$LANG.maintain.cache_clear}</label><span><input type="checkbox" id="clearCache" name="clearCache" value="1"></span></div>
-	<div><label for="clearSQLCache">{$LANG.maintain.cache_sql}</label><span><input type="checkbox" id="clearSQLCache" name="clearSQLCache" value="1"></span></div>
-	<div><label for="clearLangCache">{$LANG.maintain.cache_language}</label><span><input type="checkbox" id="clearLangCache" name="clearLangCache" value="1"></span></div>
 	<div><label for="clearImageCache">{$LANG.maintain.cache_image}</label><span><input type="checkbox" id="clearImageCache" name="clearImageCache" value="1"></span></div>
   </fieldset>
 

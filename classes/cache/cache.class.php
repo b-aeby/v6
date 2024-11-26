@@ -73,7 +73,7 @@ class Cache_Controler
      *
      * @var string
      */
-    protected $_suffix  = '.cache';
+    protected $_suffix  = '';
     protected $_empties_id = 'sql.empties';
     protected $_empties = array();
     protected $_empties_added = false;
@@ -107,11 +107,7 @@ class Cache_Controler
     
     protected function _setPrefix()
     {
-        if (!isset($GLOBALS['glob']['dbdatabase']) || empty($GLOBALS['glob']['dbdatabase'])) {
-            $this->enable(false);
-            return false;
-        }
-        $this->_prefix = substr(md5($GLOBALS['glob']['dbdatabase']), 0, 5).'.';
+        $this->_prefix = '';
     }
 
     /**

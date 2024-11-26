@@ -414,18 +414,6 @@ if (isset($_POST['clearCache']) && Admin::getInstance()->permissions('maintenanc
     $clear_post = true;
 }
 
-if (isset($_POST['clearSQLCache']) && Admin::getInstance()->permissions('maintenance', CC_PERM_DELETE)) {
-    $GLOBALS['cache']->clear('sql');
-    $GLOBALS['main']->successMessage($lang['maintain']['notify_cache_cleared']);
-    $clear_post = true;
-}
-
-if (isset($_POST['clearLangCache']) && Admin::getInstance()->permissions('maintenance', CC_PERM_DELETE)) {
-    $GLOBALS['cache']->clear('lang');
-    $GLOBALS['main']->successMessage($lang['maintain']['notify_cache_cleared']);
-    $clear_post = true;
-}
-
 if (isset($_POST['clearImageCache']) && Admin::getInstance()->permissions('maintenance', CC_PERM_DELETE)) {
     function cleanImageCache($path = null, $failed = array())
     {

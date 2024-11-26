@@ -93,6 +93,7 @@ class Cache extends Cache_Controler
      */
     public function delete($id)
     {
+        $id = shortHash($id);
         return $this->_memcached->delete($this->_makeName($id));
     }
 
@@ -104,6 +105,7 @@ class Cache extends Cache_Controler
      */
     public function exists($id)
     {
+        $id = shortHash($id);
         if (!$this->status && !$this->statusException($id)) {
             return false;
         }
@@ -123,6 +125,7 @@ class Cache extends Cache_Controler
      */
     public function read($id)
     {
+        $id = shortHash($id);
         if (!$this->status && !$this->statusException($id)) {
             return false;
         }
@@ -191,6 +194,7 @@ class Cache extends Cache_Controler
      */
     public function write($data, $id, $expire = '')
     {
+        $id = shortHash($id);
         if (!$this->status && !$this->statusException($id)) {
             return false;
         }

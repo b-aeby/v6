@@ -192,7 +192,7 @@ function smarty_function_combine($params, &$smarty)
     }
 
     if ( ! isset($params['cache_file_name'])) {
-        $params['cache_file_name'] = $params['output'] . '.cache';
+        $params['cache_file_name'] = shortHash($params['output']);
     }
 
     if ( ! isset($params['debug'])) {
@@ -200,6 +200,7 @@ function smarty_function_combine($params, &$smarty)
     }
 
     $cache_file_name = $params['cache_file_name'];
+    echo $cache_file_name;
 
     if ($params['debug'] == true || ! file_exists(CC_ROOT_DIR . '/' . $cache_file_name)) {
         smarty_build_combine($params);
