@@ -1363,7 +1363,7 @@ class GUI
         foreach ($GLOBALS['hooks']->load('class.gui.display_random_product_pre') as $hook) {
             include $hook;
         }
-        $featured_products  = $GLOBALS['db']->select('CubeCart_inventory', 'product_id', $GLOBALS['catalogue']->outOfStockWhere(array('status' => '1', 'featured' => '1')));
+        $featured_products  = $GLOBALS['db']->select('CubeCart_inventory', array('product_id'), $GLOBALS['catalogue']->outOfStockWhere(array('status' => '1', 'featured' => '1')), false, 15);
         $n = ($featured_products ? count($featured_products) : 0);
         if ($n > 0) {
             $tries = 0;
