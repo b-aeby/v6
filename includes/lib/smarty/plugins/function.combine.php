@@ -185,28 +185,24 @@ function smarty_function_combine($params, &$smarty)
         trigger_error('CSS / JS output paremeter required for combine!', E_USER_NOTICE);
     }
 
-    $params['output'] = str_replace('cache/','cache/'.$GLOBALS['cache']->getCachePrefix(),$params['output']);
-
     if ( ! isset($params['age'])) {
         $params['age'] = 3600;
     }
 
     if ( ! isset($params['cache_file_name'])) {
-        $params['cache_file_name'] = shortHash($params['output']);
+        $params['cache_file_name'] = 'cache/'.shortHash($params['output']);
     }
 
     if ( ! isset($params['debug'])) {
         $params['debug'] = false;
     }
 
-    $cache_file_name = $params['cache_file_name'];
-
-    if ($params['debug'] == true || ! file_exists(CC_ROOT_DIR . '/' . $cache_file_name)) {
+    if ($params['debug'] == true || ! file_exists(CC_ROOT_DIR . '/' . $params['cache_file_name'])) {
         smarty_build_combine($params);
         return;
     }
 
-    $cache_mtime = filemtime(CC_ROOT_DIR . '/' . $cache_file_name);
+    $cache_mtime = filemtime(CC_ROOT_DIR . '/' . $params['cache_file_name']);
 
     if ($cache_mtime + $params['age'] < time()) {
         smarty_build_combine($params);
