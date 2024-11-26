@@ -27,6 +27,7 @@ class Cache extends Cache_Controler
 {
 
     private $_memcache_servers = array('127.0.0.1',11211);
+    private $_connected = false;
 
     ##############################################
 
@@ -41,7 +42,7 @@ class Cache extends Cache_Controler
 
         $this->_memcached->setOption(Memcached::OPT_LIBKETAMA_COMPATIBLE, true);
         if (!count($this->_memcached->getServerList())) {
-            $this->_memcached->addServers($this->_memcache_servers);
+            $this->_connected = $this->_memcached->addServers($this->_memcache_servers);
         }
 
         //Run the parent constructor
@@ -149,7 +150,7 @@ class Cache extends Cache_Controler
      * @return string
      */
     public function session_save_handler() {
-        return 'memcached';
+        return $this->_connected ? 'memcached' : 'files';
     }
     /**
      * Get session save path
