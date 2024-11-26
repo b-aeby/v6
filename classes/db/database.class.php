@@ -884,7 +884,7 @@ class Database_Contoller
      */
     public function update($table, $record, $where = '', $purge = true, $skip_math_fields = array())
     {
-        $skip_math_fields = array_merge($skip_math_fields, $this->_skip_math_fields);
+        $skip_math_fields = is_array($skip_math_fields) ? array_merge($skip_math_fields, $this->_skip_math_fields) : $this->_skip_math_fields;
         if (is_array($record)) {
             $allowed = $this->getFields($table);
             foreach ($record as $field => $value) {
