@@ -1,11 +1,4 @@
 Deny from all
-<Files cache.image.*.png>
+<Files ~ "\.(png|js|css)$">
   Allow from all
 </Files>
-<Files *.css.*.css>
-  Allow from all
-</Files>
-<Files *.js*.js>
-  Allow from all
-</Files>
-
