@@ -1395,7 +1395,7 @@ class Smarty extends Smarty_Internal_TemplateBase
         $this->isMutingUndefinedOrNullWarnings = true;
     }
     /**
-     * Added for bckward compatibility for extensions that haven't been maintained
+     * Added for backward compatibility for extensions that haven't been maintained
      */
     public function muteExpectedErrors(): void {
         $this->isMutingUndefinedOrNullWarnings = true;
