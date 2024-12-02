@@ -105,7 +105,7 @@
                   <i class="fa fa-archive" title="{$product.type_alt}"></i>
                   {/if}
                </td>
-               <td>{$product.product_code}</td>
+               <td>{include file='templates/element.click_to_copy.php' value=$product.product_code}{$product.product_code}</td>
                <td>{$product.price}</td>
                <td style="text-align:center">{$product.stock_level_display}</td>
                <td>

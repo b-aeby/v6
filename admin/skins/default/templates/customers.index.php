@@ -59,7 +59,7 @@
 		  </td>
 		  <td><a href="{$customer.edit}">{$customer.last_name}, {$customer.first_name}</a> {if !empty($customer.groups)}({$customer.groups}){/if}</td>
 		  <td class="text-center"><a href="?_g=settings&node=language&language={$customer.language}"><img src="language/flags/{$customer.language}.png" alt="{$customer.language}" /></a></td> 
-		  <td>{$customer.email}</td>
+		  <td>{include file='templates/element.click_to_copy.php' value=$customer.email}{$customer.email}</td>
 		  <td>{$customer.registered}</td>
 		  <td style="text-align:center">
 		  {if $customer.order_count>0}
