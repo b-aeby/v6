@@ -626,6 +626,8 @@
     <string name="your_basket" introduced="5.0.0"><![CDATA[Your Shopping Basket]]></string>
   </group>
   <group name="common">
+    <string name="click_copy" introduced="6.5.7"><![CDATA[Click to copy]]></string>
+    <string name="copied" introduced="6.5.7"><![CDATA[Copied!]]></string>
     <string name="credit" introduced="6.5.6"><![CDATA[Credit]]></string>
     <string name="reset_pagination" introduced="6.5.4"><![CDATA[Reset Pagination]]></string>
     <string name="view" introduced="6.5.4"><![CDATA[View]]></string>

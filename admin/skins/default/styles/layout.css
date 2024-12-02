@@ -1731,3 +1731,16 @@ ul.char_filter li.selected {}
 .parse_content span img.checkbox {
     float: left;
 }
+.copy_text {
+    float: right;
+    margin: 0 3px 0 0;
+    opacity: 30%;
+}
+.copy_text:hover {
+    opacity: 100%;
+    cursor: pointer;
+}
+.copy_text:before {
+    font-family: FontAwesome;
+    content: " \f24d";
+}

@@ -443,7 +443,29 @@ if (isset($_GET['action'])) {
 
             $overview_summary['order_date']  = formatTime($overview_summary['order_date'], false, true);
             $overview_summary['ship_tracking']  = parseUrlToLink($overview_summary['ship_tracking']);
+            
+            $shipping_address = array();
+            $shipping_address[] = ucwords($overview_summary['line1_d']);
+            if(!empty($overview_summary['line2_d'])) {
+                $shipping_address[] = ucwords($overview_summary['line2_d']);
+            }
+            $shipping_address[] = strtoupper($overview_summary['town_d']);
+            $shipping_address[] = $overview_summary['state_d'];
+            $shipping_address[] = $overview_summary['postcode_d'];
+            $shipping_address[] = $overview_summary['country_d'];
 
+            $billing_address = array();
+            $billing_address[] = ucwords($overview_summary['line1']);
+            if(!empty($overview_summary['line2'])) {
+                $billing_address[] = ucwords($overview_summary['line2']);
+            }
+            $billing_address[] = strtoupper($overview_summary['town']);
+            $billing_address[] = $overview_summary['state'];
+            $billing_address[] = $overview_summary['postcode'];
+            $billing_address[] = $overview_summary['country'];
+            
+            $GLOBALS['smarty']->assign('SHIPPING_ADDRESS', implode("\r\n",$shipping_address));
+            $GLOBALS['smarty']->assign('BILLING_ADDRESS', implode("\r\n",$billing_address));
             $GLOBALS['smarty']->assign('OVERVIEW_SUMMARY', $overview_summary);
             // Show the customer comments
             if (!empty($overview_summary['customer_comments'])) {

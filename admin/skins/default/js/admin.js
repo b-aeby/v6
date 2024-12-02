@@ -252,6 +252,15 @@ function fmSearch(mode, term, token) {
     });
  }
 $(document).ready(function() {
+    $('.copy_text').on("click", function() {
+        navigator.clipboard.writeText($(this).attr('data-value'));
+        var text = $(this).attr('data-copied');
+        $(this).attr('title', text);
+    });
+    $('.copy_text').on("mouseenter mouseout", function() {
+        var text = $(this).attr('data-copy');
+        $(this).attr('title', text);
+    });
 
     $('.strlen').on("keyup", function() {
 		var rel = $(this).attr('rel');

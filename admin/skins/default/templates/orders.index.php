@@ -184,8 +184,13 @@
          <div id="order_overview">
             <fieldset class="order_address" id="shipping_address">
                <legend>{$LANG.address.delivery_address}</legend>
+               {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.name_d}
                {$OVERVIEW_SUMMARY.name_d}<br>
-               {if !empty($OVERVIEW_SUMMARY.company_name_d)}{$OVERVIEW_SUMMARY.company_name_d}<br>{/if}
+
+               {if !empty($OVERVIEW_SUMMARY.company_name_d)}
+                  {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.company_name_d}{$OVERVIEW_SUMMARY.company_name_d}<br>
+               {/if}
+               {include file='templates/element.click_to_copy.php' value=$SHIPPING_ADDRESS}
                <span class="capitalize">{$OVERVIEW_SUMMARY.line1_d}<br>
                {if !empty($OVERVIEW_SUMMARY.line2_d)}{$OVERVIEW_SUMMARY.line2_d}<br>{/if}</span>
                <span class="uppercase">{$OVERVIEW_SUMMARY.town_d}<br>
@@ -195,9 +200,12 @@
             </fieldset>
             <fieldset class="order_address">
                <legend>{$LANG.address.billing_address}</legend>
+               {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.name}
                {$OVERVIEW_SUMMARY.name}<br>
-               {if !empty($OVERVIEW_SUMMARY.company_name)}{$OVERVIEW_SUMMARY.company_name}<br>{/if}
-               <span class="capitalize">{$OVERVIEW_SUMMARY.line1}<br>
+               {if !empty($OVERVIEW_SUMMARY.company_name)}
+                  {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.company_name}{$OVERVIEW_SUMMARY.company_name}<br>
+               {/if}
+               {include file='templates/element.click_to_copy.php' value=$BILLING_ADDRESS}<span class="capitalize">{$OVERVIEW_SUMMARY.line1}<br>
                {if !empty($OVERVIEW_SUMMARY.line2)}{$OVERVIEW_SUMMARY.line2}<br>{/if}</span>
                <span class="uppercase">{$OVERVIEW_SUMMARY.town}<br>
                {if !empty($OVERVIEW_SUMMARY.state)}{$OVERVIEW_SUMMARY.state}, {/if}</span>{$OVERVIEW_SUMMARY.postcode}<br>
@@ -291,12 +299,21 @@
             </table>
             <fieldset class="other">
                <legend>{$LANG.account.contact_details}</legend>
-               <div><label>{$LANG.common.email}</label><span><a href="mailto:{$OVERVIEW_SUMMARY.email}">{$OVERVIEW_SUMMARY.email}</a></span></div>
-               <div><label>{$LANG.address.phone}</label><span>{$OVERVIEW_SUMMARY.phone}</span></div>
+               <div>
+               {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.email}
+                  <label>{$LANG.common.email}</label><span><a href="mailto:{$OVERVIEW_SUMMARY.email}" id="order_email">{$OVERVIEW_SUMMARY.email}</a></span>
+               </div>
+               <div>
+                  {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.phone}
+                  <label>{$LANG.address.phone}</label><span>{$OVERVIEW_SUMMARY.phone}</span></div>
                {if !empty($OVERVIEW_SUMMARY.mobile)}
-               <div><label>{$LANG.address.mobile}</label><span>{$OVERVIEW_SUMMARY.mobile}</span></div>
+               <div>
+                  {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.mobile}   
+                  <label>{$LANG.address.mobile}</label><span>{$OVERVIEW_SUMMARY.mobile}</span></div>
                {/if}
-               <div><label>{$LANG.common.ip_address}</label><span>{$OVERVIEW_SUMMARY.ip_address}</span></div>
+               <div>
+                  {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.ip_address}  
+                  <label>{$LANG.common.ip_address}</label><span>{$OVERVIEW_SUMMARY.ip_address}</span></div>
                <div><label>{$LANG.common.language}</label><span><img src="language/flags/{$OVERVIEW_SUMMARY.lang}.png" title="{$OVERVIEW_SUMMARY.lang}"></span></div>
                
             </fieldset>
