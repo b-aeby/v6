@@ -148,24 +148,6 @@ class Cache extends Cache_Controler
     }
 
     /**
-     * Get session save handler
-     *
-     * @return string
-     */
-    public function session_save_handler() {
-        return $this->_connected ? 'memcached' : 'files';
-    }
-    /**
-     * Get session save path
-     *
-     * @return string
-     */
-    public function session_save_path() {
-        $server_parts = array_values($this->_memcache_servers[0]);
-        return $server_parts[0].':'.$server_parts[1];
-    }
-
-    /**
      * Calculates the cache usage
      *
      * @return string

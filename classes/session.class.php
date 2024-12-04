@@ -104,14 +104,16 @@ class Session
         $ini = ini_get_all(null, false);
         if($GLOBALS['config']->has('config', 'session_save_handler')) {
             $this->_save_handler = $GLOBALS['config']->get('config', 'session_save_handler');
-        } else {
-            $this->_save_handler = Cache::getInstance()->session_save_handler();
+            if(!empty($this->_save_handler)) {
+                ini_set('session.save_handler', $this->_save_handler);
+            }
         }
-        $this->_save_path = Cache::getInstance()->session_save_path();
 
-        ini_set('session.save_handler', $this->_save_handler);
-        if($this->_save_handler!=='files') {
-            ini_set('session.save_path', $this->_save_path);
+        if($GLOBALS['config']->has('config', 'session_save_path')) {
+            $this->_save_path = $GLOBALS['config']->get('config', 'session_save_path');
+            if(!empty($this->_save_path)) {
+                ini_set('session.save_path', $this->_save_path);
+            }
         }
 
         if ($ini['session.use_trans_sid'] != '0') {
@@ -711,14 +713,6 @@ class Session
      */
     private function _start()
     {
-        if($this->_save_handler!=='files') {
-            session_save_path($this->_save_path);
-        } else {
-            $session_save_path = $GLOBALS['config']->get('config', 'session_save_path');
-            if (!empty($session_save_path) && file_exists($session_save_path)) {
-                session_save_path($session_save_path);
-            }
-        }
         session_cache_limiter('nocache');
         $session_prefix = CC_SSL ? 'S' : '';
         session_name('CC'.$session_prefix.'_'.strtoupper(substr(md5(CC_ROOT_DIR), 0, 10)));

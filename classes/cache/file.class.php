@@ -188,24 +188,6 @@ class Cache extends Cache_Controler
     }
 
     /**
-     * Get session save handler
-     *
-     * @return string
-     */
-    public function session_save_handler() {
-        return 'files';
-    }
-    /**
-     * Get session save path
-     *
-     * @return string
-     */
-    public function session_save_path() {
-        return '';
-    }
-
-
-    /**
      * Write cache data
      *
      * @param mixed $data Data to write to the file
