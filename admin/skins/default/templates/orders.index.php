@@ -184,13 +184,11 @@
          <div id="order_overview">
             <fieldset class="order_address" id="shipping_address">
                <legend>{$LANG.address.delivery_address}</legend>
-               {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.name_d}
-               {$OVERVIEW_SUMMARY.name_d}<br>
-
-               {if !empty($OVERVIEW_SUMMARY.company_name_d)}
-                  {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.company_name_d}{$OVERVIEW_SUMMARY.company_name_d}<br>
-               {/if}
                {include file='templates/element.click_to_copy.php' value=$SHIPPING_ADDRESS}
+               {$OVERVIEW_SUMMARY.name_d}<br>
+               {if !empty($OVERVIEW_SUMMARY.company_name_d)}
+                  {$OVERVIEW_SUMMARY.company_name_d}<br>
+               {/if}
                <span class="capitalize">{$OVERVIEW_SUMMARY.line1_d}<br>
                {if !empty($OVERVIEW_SUMMARY.line2_d)}{$OVERVIEW_SUMMARY.line2_d}<br>{/if}</span>
                <span class="uppercase">{$OVERVIEW_SUMMARY.town_d}<br>
@@ -200,12 +198,12 @@
             </fieldset>
             <fieldset class="order_address">
                <legend>{$LANG.address.billing_address}</legend>
-               {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.name}
+               {include file='templates/element.click_to_copy.php' value=$BILLING_ADDRESS}
                {$OVERVIEW_SUMMARY.name}<br>
                {if !empty($OVERVIEW_SUMMARY.company_name)}
-                  {include file='templates/element.click_to_copy.php' value=$OVERVIEW_SUMMARY.company_name}{$OVERVIEW_SUMMARY.company_name}<br>
+                  {$OVERVIEW_SUMMARY.company_name}<br>
                {/if}
-               {include file='templates/element.click_to_copy.php' value=$BILLING_ADDRESS}<span class="capitalize">{$OVERVIEW_SUMMARY.line1}<br>
+               <span class="capitalize">{$OVERVIEW_SUMMARY.line1}<br>
                {if !empty($OVERVIEW_SUMMARY.line2)}{$OVERVIEW_SUMMARY.line2}<br>{/if}</span>
                <span class="uppercase">{$OVERVIEW_SUMMARY.town}<br>
                {if !empty($OVERVIEW_SUMMARY.state)}{$OVERVIEW_SUMMARY.state}, {/if}</span>{$OVERVIEW_SUMMARY.postcode}<br>

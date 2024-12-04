@@ -445,6 +445,10 @@ if (isset($_GET['action'])) {
             $overview_summary['ship_tracking']  = parseUrlToLink($overview_summary['ship_tracking']);
             
             $shipping_address = array();
+            $shipping_address[] = ucwords($overview_summary['name_d']);
+            if(!empty($overview_summary['company_name_d'])) {
+                $shipping_address[] = ucwords($overview_summary['company_name_d']);
+            }
             $shipping_address[] = ucwords($overview_summary['line1_d']);
             if(!empty($overview_summary['line2_d'])) {
                 $shipping_address[] = ucwords($overview_summary['line2_d']);
@@ -455,6 +459,10 @@ if (isset($_GET['action'])) {
             $shipping_address[] = $overview_summary['country_d'];
 
             $billing_address = array();
+            $billing_address[] = ucwords($overview_summary['name']);
+            if(!empty($overview_summary['company_name'])) {
+                $billing_address[] = ucwords($overview_summary['company_name']);
+            }
             $billing_address[] = ucwords($overview_summary['line1']);
             if(!empty($overview_summary['line2'])) {
                 $billing_address[] = ucwords($overview_summary['line2']);
