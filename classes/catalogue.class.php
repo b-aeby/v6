@@ -1399,7 +1399,7 @@ class Catalogue
                     $product_price = $product_data['price'];
                     //Make sure the first character is a digit
                     $product_price = preg_replace('/[^0-9.]*/', '', $product_price);
-
+                    settype($product_price, "float");
                     $product_data['sale_price'] = $product_price - ($product_price / 100) * $GLOBALS['config']->get('config', 'catalogue_sale_percentage');
 
                     $product_data['ctrl_sale'] = ($product_data['sale_price'] > 0 && $product_data['sale_price'] != Tax::getInstance()->priceFormatHidden()) ? true : false;
