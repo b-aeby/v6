@@ -384,9 +384,15 @@ class Database_Contoller
         $fieldlist = array();
         $sql = "SHOW INDEX FROM `{$this->_prefix}$table`;";
         $result = $this->query($sql);
+        if($GLOBALS['config']->has('config', 'search_columns')) {
+            $search_cols = $GLOBALS['config']->get('config', 'search_columns');
+        }
         if ($result) {
             foreach ($result as $index) {
                 if ($index['Index_type'] == 'FULLTEXT' && $index['Key_name'] == 'fulltext') {
+                    if(!empty($search_cols) && !in_array($index['Column_name'], $search_cols)) {
+                       continue;
+                    }
                     if ($prefix) {
                         $fieldlist[] = $prefix.'.'.$index['Column_name'];
                     } else {

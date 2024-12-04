@@ -2129,7 +2129,17 @@ class Catalogue
                             $regexp = substr($regexp, 0, strlen($regexp)-2);
                             $regexp_desc = substr($regexp_desc, 0, strlen($regexp_desc)-2);
                         }
-                        $like[$i] = "(I.name ".$like_keyword." '".addslashes($regexp)."' OR I.description ".$like_keyword." '".addslashes($regexp_desc)."' OR I.product_code ".$like_keyword." '".addslashes($regexp)."')";
+
+                        $search_cols = array('name', 'description', 'product_code');
+                        if($GLOBALS['config']->has('config', 'search_columns')) {
+                            $search_cols = $GLOBALS['config']->get('config', 'search_columns');
+                        }
+                        $cq = array();
+                        foreach($search_cols as $col) {
+                            $r = $col == 'description' ? $regexp_desc : $regexp;
+                            $cq[] = "I.$col ".$like_keyword." '".addslashes($r)."'";
+                        }
+                        $like[$i] = "(".implode(' OR ', $cq).")";
                     }
                   }
                   $likeString = ' AND ('.implode(' OR ',$like).')';
