@@ -623,7 +623,6 @@ class Cart
                     $qualifying_categories = unserialize($coupon['category_id']);
                     if(is_array($qualifying_categories) && count($qualifying_categories)>0) {
                         $proceed = false;
-                        $qualifying_categories = array_flip($qualifying_categories);
                         foreach ($this->basket['contents'] as $key => $data) {
                             if($c_ids = $GLOBALS['db']->select('CubeCart_category_index', 'cat_id', array('product_id' => $data['id']))) {
                                 foreach($c_ids as $c_id) {
