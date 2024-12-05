@@ -43,7 +43,7 @@ class Session
      *
      * @var int
      */
-    private $_session_timeout = 604800;
+    private $_session_timeout = 86400;
     /**
      * Session path
      *
