@@ -1103,3 +1103,11 @@ CREATE TABLE IF NOT EXISTS `CubeCart_customer_coupon` (
   KEY `email` (`email`),
   KEY `coupon` (`coupon`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; #EOQ
+
+CREATE TABLE IF NOT EXISTS `CubeCart_cookie_consent_text` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
+  `hash` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `log` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `hash` (`hash`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; #EOQ
