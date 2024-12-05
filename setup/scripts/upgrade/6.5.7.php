@@ -21,4 +21,5 @@ if($logs = $db->misc("SELECT DISTINCT `log_hash`, `log` FROM `".$glob['dbprefix'
     // Drop the bloat
     $db->parseSchema('ALTER TABLE `CubeCart_cookie_consent` DROP `log`; #EOQ');
     $db->parseSchema('ALTER TABLE `CubeCart_cookie_consent` DROP `log_hash`; #EOQ');
+    $db->update('CubeCart_cookie_consent',"`url_shown` = REPLACE(`url_shown`,'".CC_STORE_URL."/','')");
 }
