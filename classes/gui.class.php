@@ -1663,7 +1663,7 @@ class GUI
         }
         if (!empty($config['twitter'])) {
             $vars[] = array(
-                'url' => (filter_var($config['twitter'], FILTER_VALIDATE_URL)) ? $config['twitter'] : 'https://twitter.com/'.$config['twitter'],
+                'url' => (filter_var($config['twitter'], FILTER_VALIDATE_URL)) ? $config['twitter'] : 'https://x.com/'.$config['twitter'],
                 'name' => 'Twitter',
                 'icon'	=> 'twitter-square'
             );
