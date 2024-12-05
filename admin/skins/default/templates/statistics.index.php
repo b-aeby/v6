@@ -207,13 +207,14 @@
    </p>
    <table width="100%">
       <thead>
-         <tr>
-            <td>{$LANG.statistics.session_admin}</td>
+      <tr>
+      <td>{$LANG.statistics.session_admin}</td>
             <td>{$LANG.statistics.session_user}</td>
             <td>{$LANG.statistics.session_location}</td>
             <td>{$LANG.statistics.session_started}</td>
             <td>{$LANG.statistics.session_last}</td>
             <td>{$LANG.statistics.session_length}</td>
+            <td>{$LANG.common.ip_address}</td>
          </tr>
       </thead>
       <tbody>
@@ -228,15 +229,16 @@
                {$user.name}
                {/if}
                </strong>
-               {if !empty($user.ip_address)}
-               <br>
-               [<a href="http://whois.domaintools.com/{$user.ip_address}" target="_blank">{$user.ip_address}</a>]
-               {/if}
             </td>
-            <td>{$user.location}{if strpos($user.location,"404") === false} <a href="{$user.location}" target="_blank">&raquo;</a>{/if}</td>
+            <td>{$STORE_URL}/{$user.location}{if strpos($user.location,"404") === false} <a href="{$STORE_URL}/{$user.location}" target="_blank">&raquo;</a>{/if}</td>
             <td style="text-align:center">{$user.session_start}</td>
             <td style="text-align:center"  >{$user.session_last}</td>
             <td>{$user.session_length}</td>
+            <td>{if !empty($user.ip_address)}<a href="http://whois.domaintools.com/{$user.ip_address}" target="_blank">{$user.ip_address}</a>{/if}</td>
+         </tr>
+         {foreachelse}
+         <tr>
+            <td colspan="6" class="text-center">{$LANG.form.none}</td>
          </tr>
          {/foreach}
       </tbody>
