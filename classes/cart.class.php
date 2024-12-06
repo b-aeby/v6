@@ -1386,7 +1386,7 @@ class Cart
                         $excluded_shipping = $this->basket['shipping'];
                     }
 
-                    $ave_tax_rate = ($tax_total / $subtotal);
+                    $ave_tax_rate = round($tax_total / $subtotal, 2);
 
                     $discount = ($data['type']=='percent') ? $subtotal*($data['value']/100) : $data['value'];
 
@@ -1429,7 +1429,7 @@ class Cart
                     }
                 }
 
-                $ave_tax_rate = ($tax_total / $subtotal);
+                $ave_tax_rate = round($tax_total / $subtotal, 2);
             } else {
                 if ((is_array($excluded_products) || is_array($excluded_shipping))) {
                     $excluded_subtotal = $excluded_tax_total = 0;
@@ -1451,7 +1451,7 @@ class Cart
                     }
                     if ($excluded_tax_total>0) {
                         $excluded_ave_tax_rate = ($excluded_tax_total / $excluded_subtotal);
-                        $ave_tax_rate = ($ave_tax_rate + $excluded_ave_tax_rate) / 2;
+                        $ave_tax_rate = round(($ave_tax_rate + $excluded_ave_tax_rate) / 2, 2);
                     }
                     $subtotal += $excluded_subtotal;
                 }
