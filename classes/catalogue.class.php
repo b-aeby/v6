@@ -2219,6 +2219,12 @@ class Catalogue
                     foreach ($GLOBALS['hooks']->load('class.catalogue.search_catalogue.sale_items.post') as $hook) {
                         include $hook;
                     }
+                    if(isset($sale) && is_array($sale) && !empty($sale)){
+                        foreach($sale as $k => $s){
+                            $sale[$k] = $this->getProductPrice($s);
+                        }
+                        $this->_category_products = $sale;
+                    }
                     return true;
                 }
             }
