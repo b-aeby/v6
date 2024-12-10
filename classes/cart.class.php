@@ -689,7 +689,10 @@ class Cart
                 if((bool)$coupon['exclude_sale_items']) {
                     $proceed = false;
                     foreach ($this->basket['contents'] as $key => $data) {
-                        if(isset($include[$data['id']]) && (bool)$data['in_sale']) {
+                        // If we have a specific list of product already we ignore this
+                        if(isset($include) && is_array($include) && count($include)>0 && !isset($include[$data['id']])) {
+                            continue;
+                        } elseif(isset($include[$data['id']]) && (bool)$data['in_sale']) {
                             unset($include[$data['id']]);
                         } elseif(!(bool)$data['in_sale']) {
                             $proceed = true;
