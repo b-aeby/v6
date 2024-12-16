@@ -32,7 +32,6 @@ class Catalogue
     private $_sort_by_relevance = false;
     private $_where_live_from = '';
     private $_product_data = array();
-    private $_search_mode = '';
 
     public $image_tags = array();
     public $sale_on = false;
@@ -1884,7 +1883,6 @@ class Catalogue
                     $this->_category_count  = $result["hits"]["total"]["value"];
                     if(!empty($this->_category_products)) {
                         $this->_sort_by_relevance = true;
-                        $this->_search_mode = $search_mode;
                         return true;
                     } else {
                         $this->_elasticsearch = false;
