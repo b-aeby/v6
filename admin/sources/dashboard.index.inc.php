@@ -282,7 +282,7 @@ $unsettled_orders = $GLOBALS['db']->select('CubeCart_order_summary', false, '`st
 if ($unsettled_orders) {
     $tax = Tax::getInstance();
     $GLOBALS['main']->addTabControl($lang['dashboard']['title_orders_unsettled'], 'orders', null, null, $unsettled_count);
-    
+    $customer_ids = array();
     foreach ($unsettled_orders as $order) {
         $customer_ids[$order['customer_id']] = true;
     }
