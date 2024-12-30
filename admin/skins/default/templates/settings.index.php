@@ -51,17 +51,18 @@
       </fieldset>
       <fieldset>
          <legend>{$LANG.settings.social_accounts}</legend>
+         <div><label for="bsky">Bluesky</label><span><input name="config[bsky]" id="bsky" type="text" class="textbox" value="{$CONFIG.bsky}"></span></div>
          <div><label for="facebook">Facebook</label><span><input name="config[facebook]" id="facebook" type="text" class="textbox" value="{$CONFIG.facebook}"></span></div>
          <div><label for="flickr">Flickr</label><span><input name="config[flickr]" id="flickr" type="text" class="textbox" value="{$CONFIG.flickr}"></span></div>
          <div><label for="instagram">Instagram</label><span><input name="config[instagram]" id="instagram" type="text" class="textbox" value="{$CONFIG.instagram}"></span></div>
          <div><label for="linkedin">LinkedIn</label><span><input name="config[linkedin]" id="linkedin" type="text" class="textbox" value="{$CONFIG.linkedin}"></span></div>
          <div><label for="pinterest">Pinterest</label><span><input name="config[pinterest]" id="pinterest" type="text" class="textbox" value="{$CONFIG.pinterest}"></span></div>
-         <div><label for="twitter">X</label><span><input name="config[twitter]" id="twitter" type="text" class="textbox" value="{$CONFIG.twitter}"></span></div>
          <div><label for="vimeo">Vimeo</label><span><input name="config[vimeo]" id="vimeo" type="text" class="textbox" value="{$CONFIG.vimeo}"></span></div>
          <div><label for="wordpress">WordPress</label><span><input name="config[wordpress]" id="wordpress" type="text" class="textbox" value="{$CONFIG.wordpress}"></span></div>
          <div><label for="youtube">YouTube</label><span><input name="config[youtube]" id="youtube" type="text" class="textbox" value="{$CONFIG.youtube}"></span></div>
          <div><label for="reddit">Reddit</label><span><input name="config[reddit]" id="reddit" type="text" class="textbox" value="{$CONFIG.reddit}"></span></div>
          <div><label for="tumblr">Tumblr</label><span><input name="config[tumblr]" id="tumblr" type="text" class="textbox" value="{$CONFIG.tumblr}"></span></div>
+         <div><label for="twitter">X</label><span><input name="config[twitter]" id="twitter" type="text" class="textbox" value="{$CONFIG.twitter}"></span></div>
       </fieldset>
    </div>
    <div id="Features" class="tab_content">

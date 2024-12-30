@@ -1640,6 +1640,13 @@ class GUI
                 'icon'	=> 'flickr'
             );
         }
+        if (!empty($config['bsky'])) {
+            $vars[] = array(
+                'url' => (filter_var($config['bsky'], FILTER_VALIDATE_URL)) ? $config['bsky'] : 'https://bsky.app/profile/'.$config['bsky'],
+                'name' => 'Bluesky',
+                'icon'	=> 'bsky'
+            );
+        }
         if (!empty($config['instagram'])) {
             $vars[] = array(
                 'url' => (filter_var($config['instagram'], FILTER_VALIDATE_URL)) ? $config['instagram'] : 'https://www.instagram.com/'.$config['instagram'],
