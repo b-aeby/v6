@@ -570,21 +570,27 @@ if (!isset($_SESSION['setup'])) {
 
             if ($update_config) {
                 $_SESSION['setup']['admin_rename'] = true;
-                foreach ($glob as $key => $value) {
-                    if ($key=='adminFile') {
-                        $value = $adminFile;
-                    } elseif ($key=='adminFolder') {
-                        $value = $adminFolder;
+                $config = array();
+                if(is_array($glob) && !empty($glob)) {
+                    foreach ($glob as $key => $value) {
+                        if ($key=='adminFile') {
+                            $value = $adminFile;
+                        } elseif ($key=='adminFolder') {
+                            $value = $adminFolder;
+                        }
+                        $value = is_array($value) ? var_export($value, true) : "'".addslashes($value)."'";
+                        $config[] = sprintf("\$glob['%s'] = %s;", $key, $value);
                     }
-                    $value = is_array($value) ? var_export($value, true) : "'".addslashes($value)."'";
-                    $config[] = sprintf("\$glob['%s'] = %s;", $key, $value);
+                    // Config to string
+                    $config = sprintf("<?php\n%s\n?>", implode("\n", $config));
                 }
-                $config = sprintf("<?php\n%s\n?>", implode("\n", $config));
                 ## Backup existing config file, if it exists
                 if (file_exists($global_file)) {
                     rename($global_file, $global_file.'-'.date('Ymdgis').'.php');
                 }
-                if (file_put_contents($global_file, $config));
+                if (!empty($config)) {
+                    file_put_contents($global_file, $config);
+                }
             }
             $adminURL = str_replace('/setup', '', CC_STORE_URL).'/'.$adminFile;
             if ($admins = $db->select('CubeCart_admin_users', false, array('status'=> 1))) {
