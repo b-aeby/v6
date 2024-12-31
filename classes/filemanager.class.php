@@ -285,8 +285,22 @@ class FileManager
             foreach ($file_array as $key => $file) {
                 if (!is_dir($file)) {
                     // Skip file if it is not an image and we're in image mode
-                    if ($this->_mode == 1 && !preg_match('/\.(jpeg|jpg|png|gif|webp)$/i', $file)) {
-                        continue;
+                    if ($this->_mode == 1) {
+                        // Check mime matches extension
+                        $ext = pathinfo($file, PATHINFO_EXTENSION);
+                        $mime = $this->getMimeType($file);
+                        if(in_array($ext, array('jpg','jpeg')) && $mime!=='image/jpeg') {
+                            continue;
+                        }
+                        if(in_array($ext, array('gif')) && $mime!=='image/gif') {
+                            continue;
+                        }
+                        if(in_array($ext, array('png')) && $mime!=='image/png') {
+                            continue;
+                        }
+                        if(in_array($ext, array('webp')) && $mime!=='image/webp') {
+                            continue;
+                        }
                     }
 
                     // Skip existing entries, and sources/thumbs
