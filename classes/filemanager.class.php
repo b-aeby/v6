@@ -289,17 +289,70 @@ class FileManager
                         // Check mime matches extension
                         $ext = pathinfo($file, PATHINFO_EXTENSION);
                         $mime = $this->getMimeType($file);
-                        if(in_array($ext, array('jpg','jpeg')) && $mime!=='image/jpeg') {
-                            continue;
+        
+                        if(in_array($ext, array('jpg','jpeg'))) {
+                            if($mime!=='image/jpeg') {
+                                trigger_error($file.' has a mime type of '.$mime.'.');
+                                continue;
+                            } else {
+                                try {
+                                    if(!imagecreatefromjpeg($file)) {
+                                        trigger_error($file.' is not a valid jpg file.');
+                                        continue;
+                                    }
+                                } catch (Exception $e) {
+                                    trigger_error($e->getMessage());
+                                    continue;
+                                }
+                            }
                         }
-                        if(in_array($ext, array('gif')) && $mime!=='image/gif') {
-                            continue;
+                        if($ext == 'gif') {
+                            if($mime!=='image/gif') {
+                                trigger_error($file.' has a mime type of '.$mime.'.');
+                                continue;
+                            } else {
+                                try {
+                                    if(!imagecreatefromgif($file)) {
+                                        trigger_error($file.' is not a valid gif file.');
+                                        continue;
+                                    }
+                                } catch (Exception $e) {
+                                    trigger_error($e->getMessage());
+                                    continue;
+                                }
+                            }
                         }
-                        if(in_array($ext, array('png')) && $mime!=='image/png') {
-                            continue;
+                        if($ext == 'png') {
+                            if($mime!=='image/png') {
+                                trigger_error($file.' has a mime type of '.$mime.'.');
+                                continue;
+                            } else {
+                                try {
+                                    if(!imagecreatefrompng($file)) {
+                                        trigger_error($file.' is not a valid png file.');
+                                        continue;
+                                    }
+                                } catch (Exception $e) {
+                                    trigger_error($e->getMessage());
+                                    continue;
+                                }
+                            }
                         }
-                        if(in_array($ext, array('webp')) && $mime!=='image/webp') {
-                            continue;
+                        if($ext == 'webp') {
+                            if($mime!=='image/webp') {
+                                trigger_error($file.' has a mime type of '.$mime.'.');
+                                continue;
+                            } else {
+                                try {
+                                    if(!imagecreatefromwebp($file)) {
+                                        trigger_error($file.' is not a valid webp file.');
+                                        continue;
+                                    }
+                                } catch (Exception $e) {
+                                    trigger_error($e->getMessage());
+                                    continue;
+                                }
+                            }
                         }
                     }
 
